@@ -19,7 +19,7 @@
         <DataTemplate x:Key="DataTemplate_Level2">
             <Button Content="{Binding State}"
                     Command="{StaticResource FuckCommand}"
-                    Height="40" Width="40" Margin="5" >
+                    Height="35" Width="35" Margin="5" >
                 <Button.CommandParameter>
                     <MultiBinding Converter="{StaticResource FuckConverter}">
                         <Binding/>
@@ -45,7 +45,7 @@
     <Grid>
         <Label Content="5 в ряд" HorizontalAlignment="Left" VerticalAlignment="Top" Height="76" Width="299" FontSize="48" Margin="408,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
         <Button Name ="Restart" Content="Начать с начала" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="900,20,0,0" Height="40" Width="150" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <ComboBox Width="100" Height="40" VerticalAlignment="Top" Margin="0, 20, 0, 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ItemsSource="{Binding Path=Game.Razmeri}" SelectedIndex="0" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding SelectedItem}"/>
+        <ComboBox Width="100" Height="40" VerticalAlignment="Top" Margin="0, 20, 0, 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ItemsSource="{Binding Path=Game.Razmeri}" SelectedIndex="0" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding Size}"/>
 
         <DockPanel>
             <ItemsControl 

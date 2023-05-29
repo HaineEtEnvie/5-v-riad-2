@@ -32,18 +32,6 @@ namespace WpfApp6.ViewModels
             Size = "15";
         }
 
-        private string selectedItem;
-        public string SelectedItem
-        {
-            get => selectedItem;
-            set
-            {
-                selectedItem = value;
-                var key = selectedItem.Trim('[').Trim(']').Split(',').FirstOrDefault();
-                Size ??= key;
-            }
-        }
-
         ObservableCollection<ObservableCollection<Field>> f = new();
         public ObservableCollection<ObservableCollection<Field>> F
         {
@@ -65,7 +53,9 @@ namespace WpfApp6.ViewModels
             get => size.ToString();
             set 
             {
-                if (int.TryParse(value, out int newSize))
+                var key = value.Trim('[').Trim(']').Split(',').FirstOrDefault();
+
+                if (int.TryParse(key, out int newSize))
                 {
                     Set(ref size, newSize);
 
@@ -81,8 +71,7 @@ namespace WpfApp6.ViewModels
                         newField.Rows.Add(row);
                     }
                     Field = newField;
-
-
+                    
                     f.Clear();                    
                     for (int i = 0; i < newSize; i++)
                     {

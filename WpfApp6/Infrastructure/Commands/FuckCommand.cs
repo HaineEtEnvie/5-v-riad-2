@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Data;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -55,7 +56,6 @@ namespace WpfApp6.Infrastructure.Commands
             {
                 MessageBox.Show($"{state} победили!");
                 ResetGame(mwwm);
-                return;
             }
         }
 
@@ -160,16 +160,9 @@ namespace WpfApp6.Infrastructure.Commands
         }
         static void ResetGame(MainWindowViewModel mwwm)
         {
-            // очистка текста
-            foreach ( var collection in mwwm.F)
-            {
-                foreach (var item in collection)
-                {
-                    item.State = "";
-                }
-            }
             // сброс ходов 
-            mwwm.Game.Move = "0";
+            mwwm.Game.Move = "X";
+            mwwm.Size = mwwm.Size;
         }
     }
 }
