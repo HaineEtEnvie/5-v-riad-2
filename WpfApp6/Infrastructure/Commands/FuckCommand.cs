@@ -3,9 +3,11 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Data;
 using System.Linq;
+using System.Reflection.Metadata;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Automation;
 using System.Windows.Controls;
 using WpfApp6.Infrastructure.Commands.Base;
 using WpfApp6.Models;
@@ -26,6 +28,7 @@ namespace WpfApp6.Infrastructure.Commands
             object[] parameters = parameter as object[];
             Field field = parameters[0]  as Field;
             MainWindowViewModel mwvm = parameters[1] as MainWindowViewModel;
+            MainWindow mainWindow = parameters[2] as MainWindow;
             if (field == null || field.State != "")
             {
                 return;
@@ -46,16 +49,19 @@ namespace WpfApp6.Infrastructure.Commands
             }
             mwvm.Game.Move = mwvm.Game.Move == "X" ? "0" : "X";
             
-            CheckWin(field.State, mwvm);
+            CheckWin(field.State, mwvm, mainWindow);
         }
         
-         private void CheckWin(string state, MainWindowViewModel mwwm)
+         private void CheckWin(string state, MainWindowViewModel mwwm, MainWindow mainWindow)
         {
             // Проверка победителя
             if (CheckForWinner(mwwm.F))
             {
                 MessageBox.Show($"{state} победили!");
-                ResetGame(mwwm);
+                
+                // Сброс игрового поля
+                var resetCommand = new ResetCommand();
+                resetCommand.ResetGame(mwwm, mainWindow);
             }
         }
 
@@ -157,12 +163,6 @@ namespace WpfApp6.Infrastructure.Commands
                 }
             }
             return false;
-        }
-        static void ResetGame(MainWindowViewModel mwwm)
-        {
-            // сброс ходов 
-            mwwm.Game.Move = "X";
-            mwwm.Size = mwwm.Size;
         }
     }
 }

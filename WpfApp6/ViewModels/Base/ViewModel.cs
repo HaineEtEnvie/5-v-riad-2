@@ -16,7 +16,6 @@ namespace WpfApp6.ViewModels.Base
 
         protected virtual void OnPropertyChanged([CallerMemberName] string PropertyName = null)
         {
-            //PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(PropertyName));
             var handlers = PropertyChanged;
             if (handlers is null) return;
 

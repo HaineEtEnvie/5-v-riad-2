@@ -23,6 +23,7 @@ namespace WpfApp6
         public MainWindow()
         {
             InitializeComponent();
+
         }
     }
 }

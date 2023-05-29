@@ -9,13 +9,16 @@
         xmlns:vm="clr-namespace:WpfApp6.ViewModels"
         mc:Ignorable="d"
         ResizeMode = "NoResize"
-        Title="{Binding Path=Game.Move}" Height="1000" Width="1600" WindowStartupLocation="CenterScreen">
+        Title="5 в ряд" Height="1000" Width="1600" WindowStartupLocation="CenterScreen">
     <Window.DataContext>
         <vm:MainWindowViewModel/>
     </Window.DataContext>
     <Window.Resources>
+        <l:MainWindow x:Key="MainWindow"/>
         <c:FuckConverter x:Key="FuckConverter"/>
         <ce:FuckCommand x:Key="FuckCommand"/>
+        <c:ResetConverter x:Key="ResetConverter"/>
+        <ce:ResetCommand x:Key="ResetCommand"/>
         <vm:MainWindowViewModel x:Key="FuckViewModal"/>
         <DataTemplate x:Key="DataTemplate_Level2">
             <Button Content="{Binding State}"
@@ -25,6 +28,7 @@
                     <MultiBinding Converter="{StaticResource FuckConverter}">
                         <Binding/>
                         <Binding Source="{StaticResource FuckViewModal}"/>
+                        <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
                     </MultiBinding>
                 </Button.CommandParameter>
             </Button>
@@ -45,11 +49,27 @@
 
     <Grid>
         <Label Content="5 в ряд" HorizontalAlignment="Left" VerticalAlignment="Top" Height="76" Width="299" FontSize="48" Margin="408,0,0,0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <Button Name ="Restart" Content="Начать с начала" HorizontalAlignment="Left" VerticalAlignment="Top" Margin="900,20,0,0" Height="40" Width="150" FontSize="16" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
-        <ComboBox Width="100" Height="40" VerticalAlignment="Top" Margin="0, 20, 0, 0" VerticalContentAlignment="Center" HorizontalContentAlignment="Center" ItemsSource="{Binding Path=Game.Razmeri}" SelectedIndex="0" DisplayMemberPath="Value" SelectedValuePath="Key" SelectedItem="{Binding Size}"/>
-
+        <ComboBox Width="100" Height="40" VerticalAlignment="Top" Margin="0, 20, 0, 0" 
+                  VerticalContentAlignment="Center" HorizontalContentAlignment="Center" 
+                  ItemsSource="{Binding Path=Game.Razmeri}" SelectedIndex="0" 
+                  DisplayMemberPath="Value" SelectedValuePath="Key"
+                  SelectedItem="{Binding Size}"/>
+        <Button Content="Начать сначала"
+                HorizontalAlignment="Left" VerticalAlignment="Top" 
+                Margin="900,20,0,0" FontSize="16" 
+                VerticalContentAlignment="Center" 
+                HorizontalContentAlignment="Center"
+                Command="{StaticResource ResetCommand}"
+                Height="40" Width="150" >
+            <Button.CommandParameter>
+                <MultiBinding Converter="{StaticResource ResetConverter}">
+                    <Binding Source="{StaticResource FuckViewModal}"/>
+                    <Binding RelativeSource="{RelativeSource FindAncestor, AncestorType={x:Type Window}}"/>
+                </MultiBinding>
+            </Button.CommandParameter>
+        </Button>
         <DockPanel>
-            <ItemsControl 
+            <ItemsControl Name="Control"
                 ItemsSource="{Binding F}" 
                 ItemTemplate="{DynamicResource DataTemplate_Level1}" Height="868" Margin="0, 70, 0, 0"/>
         </DockPanel>
